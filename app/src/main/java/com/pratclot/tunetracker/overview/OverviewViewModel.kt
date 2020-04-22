@@ -2,7 +2,6 @@ package com.pratclot.tunetracker.overview
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pratclot.tunetracker.database.Tune
 import com.pratclot.tunetracker.database.TuneDatabaseDao
@@ -15,13 +14,9 @@ class OverviewViewModel(val database: TuneDatabaseDao, application: Application)
 
     val tunes = database.getAll()
 
-    var tuneNameInputText: String = ""
-        set(value) {
-            field = value
-        }
+    var tuneNameInputText = MutableLiveData<String>()
 
     init {
-
     }
 
     private suspend fun insert(tune: Tune) {
@@ -38,10 +33,11 @@ class OverviewViewModel(val database: TuneDatabaseDao, application: Application)
 
     fun onAddTune() {
         uiScope.launch {
-            if (tuneNameInputText != null) {
-                val newTune = Tune(tuneName = tuneNameInputText!!)
+            if (tuneNameInputText.value != null) {
+                val newTune = Tune(tuneName = tuneNameInputText.value!!)
                 insert(newTune)
             }
+            tuneNameInputText.value = null
         }
     }
 
