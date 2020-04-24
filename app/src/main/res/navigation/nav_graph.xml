@@ -14,5 +14,8 @@
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.pratclot.tunetracker.details.DetailsFragment"
-        android:label="DetailsFragment" />
+        android:label="DetailsFragment" >
+        <argument android:name="id"
+            app:argType="long" />
+    </fragment>
 </navigation>

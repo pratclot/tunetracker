@@ -2,40 +2,42 @@ package com.pratclot.tunetracker.overview
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.pratclot.tunetracker.database.Tune
-import com.pratclot.tunetracker.database.TuneDatabaseDao
+import com.pratclot.tunetracker.domain.Tune
+import com.pratclot.tunetracker.repository.TuneRepository
 import kotlinx.coroutines.*
 
-class OverviewViewModel(val database: TuneDatabaseDao, application: Application) :
+class OverviewViewModel(
+    application: Application,
+    private val tuneRepository: TuneRepository
+) :
     AndroidViewModel(application) {
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val tunes = database.getAll()
+    val tunes = tuneRepository.tunes
 
     var tuneNameInputText = MutableLiveData<String>()
 
+    private val _navigateToTuneDetails = MutableLiveData<Long>()
+    val navigateToTuneDetails: LiveData<Long>
+        get() = _navigateToTuneDetails
+
+    fun onTuneClicked(it: Long?) {
+        _navigateToTuneDetails.value = it
+    }
+
     init {
-    }
-
-    private suspend fun insert(tune: Tune) {
-        withContext(Dispatchers.IO) {
-            database.insert(tune)
-        }
-    }
-
-    private suspend fun clear() {
-        withContext(Dispatchers.IO) {
-            database.clear()
-        }
     }
 
     fun onAddTune() {
         uiScope.launch {
             if (tuneNameInputText.value != null) {
-                val newTune = Tune(tuneName = tuneNameInputText.value!!)
-                insert(newTune)
+                val newTune = Tune(
+                    name = tuneNameInputText.value.toString()
+                )
+                tuneRepository.insert(newTune)
             }
             tuneNameInputText.value = null
         }
@@ -43,11 +45,15 @@ class OverviewViewModel(val database: TuneDatabaseDao, application: Application)
 
     fun onClear() {
         uiScope.launch {
-            clear()
+            tuneRepository.clear()
         }
     }
 
     override fun onCleared() {
         viewModelJob.cancel()
+    }
+
+    fun onDetailsNavigationEnded() {
+        _navigateToTuneDetails.value = null
     }
 }

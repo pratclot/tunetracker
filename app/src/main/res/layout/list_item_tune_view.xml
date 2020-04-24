@@ -6,13 +6,17 @@
 
         <variable
             name="tune"
-            type="com.pratclot.tunetracker.database.Tune" />
+            type="com.pratclot.tunetracker.domain.Tune" />
+        <variable
+            name="clickListener"
+            type="com.pratclot.tunetracker.overview.TuneListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/list_item_tune_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClick(tune)}">
 
         <TextView
             android:id="@+id/tune_name_string"

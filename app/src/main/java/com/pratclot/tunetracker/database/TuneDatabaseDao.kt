@@ -9,17 +9,17 @@ import androidx.room.Update
 @Dao
 interface TuneDatabaseDao {
     @Insert
-    fun insert(tune: Tune)
+    fun insert(databaseTune: DatabaseTune)
 
     @Update
-    fun update(tune: Tune)
+    fun update(databaseTune: DatabaseTune)
 
-    @Query("SELECT * FROM tunes WHERE tune_name = :name")
-    fun get(name: String): Tune?
+    @Query("SELECT * FROM databasetune WHERE name = :name")
+    fun get(name: String): DatabaseTune?
 
-    @Query("SELECT * FROM tunes")
-    fun getAll(): LiveData<List<Tune>>
+    @Query("SELECT * FROM databasetune")
+    fun getAll(): LiveData<List<DatabaseTune>>
 
-    @Query("DELETE FROM tunes")
+    @Query("DELETE FROM databasetune")
     fun clear()
 }

@@ -5,22 +5,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.pratclot.tunetracker.database.Tune
+import com.pratclot.tunetracker.database.DatabaseTune
 import com.pratclot.tunetracker.databinding.ListItemTuneViewBinding
+import com.pratclot.tunetracker.domain.Tune
 
-class OverviewViewModelAdapter : ListAdapter<Tune, OverviewViewModelAdapter.ViewHolder>(DiffCallback()) {
+class OverviewViewModelAdapter(val clickListener: TuneListener) : ListAdapter<Tune, OverviewViewModelAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     class ViewHolder private constructor(val binding: ListItemTuneViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Tune) {
+        fun bind(item: Tune, clickListener: TuneListener) {
             binding.tune = item
+            binding.clickListener = clickListener
+            binding.executePendingBindings()
         }
 
         companion object {
@@ -41,4 +44,8 @@ class DiffCallback : DiffUtil.ItemCallback<Tune>() {
     override fun areContentsTheSame(oldItem: Tune, newItem: Tune): Boolean {
         return areItemsTheSame(oldItem, newItem)
     }
+}
+
+class TuneListener(val clickListener: (tuneId: Long?) -> Unit) {
+    fun onClick(tune: Tune) = clickListener(tune.id)
 }

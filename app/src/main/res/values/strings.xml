@@ -3,4 +3,6 @@
     <string name="add_tune_button_text">Add Tune</string>
     <string name="tune_input_hint">Type in tune name...</string>
     <string name="clear_db_button_text">Clear</string>
+    <string name="sample_tune_name">Windy and Warm</string>
+    <string name="sample_tune_link_to_pdf">https://tommyemmanuel.files.wordpress.com/2007/09/tommy-emmanuel-windy-and-warm.pdf</string>
 </resources>
