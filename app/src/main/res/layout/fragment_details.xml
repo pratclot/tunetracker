@@ -28,7 +28,11 @@
             android:layout_height="36dp"
             android:text="@string/sample_tune_link_to_pdf" />
 
-        <WebView
+<!--        <WebView-->
+<!--            android:id="@+id/tune_tab_view"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"/>-->
+        <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/tune_tab_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

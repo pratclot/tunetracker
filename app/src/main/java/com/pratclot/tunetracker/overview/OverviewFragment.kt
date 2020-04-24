@@ -28,10 +28,9 @@ class OverviewFragment : Fragment() {
             false
         )
 
-//        The following is ridiculously ugly, but is exactly what is tought in Android Kotlin Course
         val application = requireNotNull(this.activity).application
         val database = TuneDatabase.getInstance(application)
-        val tuneRepository = TuneRepository(database)
+        val tuneRepository = TuneRepository(database, application)
         val viewModelFactory = OverviewViewModelFactory(application, tuneRepository)
         val overviewViewModel =
             ViewModelProviders.of(
@@ -50,7 +49,6 @@ class OverviewFragment : Fragment() {
                 adapter.submitList(it)
             }
         })
-//        End of the ugliness
 
         overviewViewModel.navigateToTuneDetails.observe(viewLifecycleOwner, Observer {
             it?.let{

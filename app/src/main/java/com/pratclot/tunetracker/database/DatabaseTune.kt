@@ -18,7 +18,15 @@ data class DatabaseTune(
 
     @ColumnInfo(name = "tab_local_url")
     val tabLocalUrl: String
-)
+) {
+    fun asDomainModel(): Tune {
+        return Tune(
+            name = name,
+            tabWebUrl = tabWebUrl,
+            tabLocalUrl = tabLocalUrl
+        )
+    }
+}
 
 fun List<DatabaseTune>.asDomainModel(): List<Tune> {
     return map {

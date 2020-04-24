@@ -17,6 +17,9 @@ interface TuneDatabaseDao {
     @Query("SELECT * FROM databasetune WHERE name = :name")
     fun get(name: String): DatabaseTune?
 
+    @Query("SELECT *FROM databasetune WHERE id = :id")
+    fun getById(id: Long): DatabaseTune
+
     @Query("SELECT * FROM databasetune")
     fun getAll(): LiveData<List<DatabaseTune>>
 
