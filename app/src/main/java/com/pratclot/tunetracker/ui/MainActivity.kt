@@ -1,8 +1,8 @@
-package com.pratclot.tunetracker
+package com.pratclot.tunetracker.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import timber.log.Timber
+import com.pratclot.tunetracker.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,6 +10,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Timber.plant(Timber.DebugTree())
     }
 }
