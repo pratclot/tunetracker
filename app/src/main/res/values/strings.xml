@@ -5,4 +5,5 @@
     <string name="clear_db_button_text">Clear</string>
     <string name="sample_tune_name">Windy and Warm</string>
     <string name="sample_tune_link_to_pdf">https://tommyemmanuel.files.wordpress.com/2007/09/tommy-emmanuel-windy-and-warm.pdf</string>
+    <string name="clear_database_text">Clear Tunes</string>
 </resources>

@@ -13,10 +13,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.File
+import javax.inject.Inject
 
 private const val PDF_FILE_EXTENSION = ".pdf"
 
-class TuneRepository(
+class TuneRepository @Inject constructor(
     private val database: TuneDatabase,
     private val application: Application
 ) {

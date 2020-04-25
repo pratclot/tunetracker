@@ -34,4 +34,9 @@ class DetailsViewModel(
         }
         Timber.i("123")
     }
+
+    override fun onCleared() {
+        viewModelJob.cancel()
+        super.onCleared()
+    }
 }

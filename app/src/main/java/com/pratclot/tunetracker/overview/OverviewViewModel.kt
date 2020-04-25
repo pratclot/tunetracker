@@ -51,6 +51,7 @@ class OverviewViewModel(
 
     override fun onCleared() {
         viewModelJob.cancel()
+        super.onCleared()
     }
 
     fun onDetailsNavigationEnded() {

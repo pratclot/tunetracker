@@ -51,12 +51,22 @@ class OverviewFragment : Fragment() {
         })
 
         overviewViewModel.navigateToTuneDetails.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                this.findNavController().navigate(OverviewFragmentDirections.actionOverviewFragmentToDetailsFragment(it))
+            it?.let {
+                this.findNavController()
+                    .navigate(OverviewFragmentDirections.actionOverviewFragmentToDetailsFragment(it))
                 overviewViewModel.onDetailsNavigationEnded()
             }
         })
 
         return binding.root
     }
+
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        when (item.itemId) {
+//            R.id.clear_database -> {
+//                overviewViewModel.onClear()
+//                true
+//            }
+//        }
+//    }
 }
