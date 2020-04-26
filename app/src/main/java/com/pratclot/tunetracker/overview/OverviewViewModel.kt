@@ -4,15 +4,19 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.pratclot.tunetracker.domain.Tune
+import com.pratclot.tunetracker.repository.ITuneRepository
 import com.pratclot.tunetracker.repository.TuneRepository
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
-class OverviewViewModel(
-    application: Application,
-    private val tuneRepository: TuneRepository
+class OverviewViewModel @Inject constructor(
+//    application: Application,
+    private val tuneRepository: ITuneRepository
 ) :
-    AndroidViewModel(application) {
+    ViewModel() {
+//    AndroidViewModel(application) {
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 

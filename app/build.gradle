@@ -29,6 +29,16 @@ android {
         enabled = true
     }
 
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
 }
 
 dependencies {
@@ -61,5 +71,9 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:${versions.retrofit_coroutines_adapter}"
 
     implementation "com.github.barteksc:android-pdf-viewer:${versions.pdf_viewer}"
+
+
+    implementation "com.google.dagger:dagger:${versions.dagger}"
+    kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 
 }

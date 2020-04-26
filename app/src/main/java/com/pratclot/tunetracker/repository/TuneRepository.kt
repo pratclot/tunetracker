@@ -1,6 +1,5 @@
 package com.pratclot.tunetracker.repository
 
-import android.app.Application
 import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -19,14 +18,14 @@ private const val PDF_FILE_EXTENSION = ".pdf"
 
 class TuneRepository @Inject constructor(
     private val database: TuneDatabase,
-    private val application: Application
-) {
-    val tunes: LiveData<List<Tune>> =
+    private val application: Context
+) : ITuneRepository {
+    override val tunes: LiveData<List<Tune>> =
         Transformations.map(database.tuneDatabaseDao.getAll()) {
             it.asDomainModel()
         }
 
-    suspend fun insert(tune: Tune) {
+    override suspend fun insert(tune: Tune) {
         val filename = downloadTabInPdf(tune)
         tune.tabLocalUrl = filename
 
@@ -35,13 +34,13 @@ class TuneRepository @Inject constructor(
         }
     }
 
-    suspend fun clear() {
+    override suspend fun clear() {
         withContext(Dispatchers.IO) {
             database.tuneDatabaseDao.clear()
         }
     }
 
-    suspend fun downloadTabInPdf(tune: Tune): String {
+    override suspend fun downloadTabInPdf(tune: Tune): String {
         val filename = tune.name + PDF_FILE_EXTENSION
         val file = File(application.filesDir, filename)
         if (file.exists()) {
@@ -60,7 +59,7 @@ class TuneRepository @Inject constructor(
         return file.absolutePath
     }
 
-    fun getTuneByName(name: String): Uri {
+    override fun getTuneByName(name: String): Uri {
         val retrievedDatabaseTune = database.tuneDatabaseDao.get(name)?.asDomainModel()
         var uri = Uri.EMPTY
         if (retrievedDatabaseTune != null) {
@@ -69,7 +68,7 @@ class TuneRepository @Inject constructor(
         return uri
     }
 
-    suspend fun getTuneById(id: Long): Tune? {
+    override suspend fun getTuneById(id: Long): Tune? {
         var tune = Tune(name = "123")
         withContext(Dispatchers.IO) {
             tune = database.tuneDatabaseDao.getById(id).asDomainModel()!!
