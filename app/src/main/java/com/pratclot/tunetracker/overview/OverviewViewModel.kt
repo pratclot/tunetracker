@@ -12,11 +12,9 @@ import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class OverviewViewModel @Inject constructor(
-//    application: Application,
     private val tuneRepository: ITuneRepository
 ) :
     ViewModel() {
-//    AndroidViewModel(application) {
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
