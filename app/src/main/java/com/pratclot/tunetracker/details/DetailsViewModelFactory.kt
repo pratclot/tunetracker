@@ -1,11 +1,8 @@
 package com.pratclot.tunetracker.details
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.pratclot.tunetracker.repository.TuneRepository
-import com.squareup.inject.assisted.Assisted
-import com.squareup.inject.assisted.AssistedInject
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
 

@@ -2,7 +2,6 @@ package com.pratclot.tunetracker.details.di
 
 import com.pratclot.tunetracker.details.DetailsFragment
 import com.pratclot.tunetracker.details.DetailsViewModel
-import com.pratclot.tunetracker.overview.OverviewFragment
 import dagger.Subcomponent
 
 @Subcomponent

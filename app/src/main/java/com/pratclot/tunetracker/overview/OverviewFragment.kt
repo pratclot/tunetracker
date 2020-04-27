@@ -7,14 +7,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.pratclot.tunetracker.R
-import com.pratclot.tunetracker.TuneTracker
-import com.pratclot.tunetracker.database.TuneDatabase
 import com.pratclot.tunetracker.databinding.FragmentOverviewBinding
-import com.pratclot.tunetracker.repository.TuneRepository
 import com.pratclot.tunetracker.ui.MainActivity
 import javax.inject.Inject
 
@@ -40,13 +36,6 @@ class OverviewFragment : Fragment() {
         setHasOptionsMenu(true)
 
         val application = requireNotNull(this.activity).application
-//        val database = TuneDatabase.getInstance(application)
-//        val tuneRepository = TuneRepository(database, application)
-//        val viewModelFactory = OverviewViewModelFactory(application, tuneRepository)
-//        overviewViewModel =
-//            ViewModelProviders.of(
-//                this, viewModelFactory
-//            ).get(OverviewViewModel::class.java)
         binding.overviewViewModel = overviewViewModel
         val manager = LinearLayoutManager(application)
         binding.tuneView.layoutManager = manager

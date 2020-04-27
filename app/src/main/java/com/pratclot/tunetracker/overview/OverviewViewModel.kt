@@ -1,13 +1,10 @@
 package com.pratclot.tunetracker.overview
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.repository.ITuneRepository
-import com.pratclot.tunetracker.repository.TuneRepository
 import kotlinx.coroutines.*
 import javax.inject.Inject
 

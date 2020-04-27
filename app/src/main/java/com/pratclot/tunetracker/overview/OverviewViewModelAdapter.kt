@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.pratclot.tunetracker.database.DatabaseTune
 import com.pratclot.tunetracker.databinding.ListItemTuneViewBinding
 import com.pratclot.tunetracker.domain.Tune
 
