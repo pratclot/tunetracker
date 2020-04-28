@@ -59,7 +59,7 @@ dependencies {
     kapt "androidx.room:room-compiler:${versions.room}"
     implementation "androidx.lifecycle:lifecycle-extensions:${versions.lifecycle_extensions}"
 
-//    implementation "com.google.android.material:material:${versions.material}"
+    implementation "com.google.android.material:material:${versions.material}"
 
 
     implementation "com.squareup.retrofit2:retrofit: ${versions.retrofit}"

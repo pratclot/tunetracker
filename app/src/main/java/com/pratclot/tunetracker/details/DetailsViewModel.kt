@@ -2,6 +2,7 @@ package com.pratclot.tunetracker.details
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.repository.TuneRepository
@@ -11,7 +12,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class DetailsViewModel @AssistedInject constructor(
     @Assisted val tuneId: Long,
@@ -32,11 +32,14 @@ class DetailsViewModel @AssistedInject constructor(
     val tune: LiveData<Tune>
         get() = _tune
 
+    val tuneName = Transformations.map(tune) {
+        it.name
+    }
+
     init {
         uiScope.launch {
             _tune.value = tuneRepository.getTuneById(tuneId)
         }
-        Timber.i("123")
     }
 
     override fun onCleared() {

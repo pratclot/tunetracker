@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.databinding.FragmentDetailsBinding
 import com.pratclot.tunetracker.ui.MainActivity
+import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
 
@@ -34,11 +35,11 @@ class DetailsFragment : Fragment() {
             container,
             false
         )
-        val application = requireNotNull(this.activity).application
         arguments = DetailsFragmentArgs.fromBundle(requireArguments())
         detailsViewModel =
             (activity as MainActivity).detailsComponent.detailsViewModelFactory.create(arguments.id)
         binding.detailsViewModel = detailsViewModel
+        binding.lifecycleOwner = this
 
         detailsViewModel.tune.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -46,6 +47,7 @@ class DetailsFragment : Fragment() {
             }
         })
 
+        Timber.i("${detailsViewModel.tuneName.value}")
         return binding.root
     }
 

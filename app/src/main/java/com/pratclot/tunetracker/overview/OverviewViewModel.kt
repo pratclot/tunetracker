@@ -17,8 +17,6 @@ class OverviewViewModel @Inject constructor(
 
     val tunes = tuneRepository.tunes
 
-    var tuneNameInputText = MutableLiveData<String>()
-
     private val _navigateToTuneDetails = MutableLiveData<Long>()
     val navigateToTuneDetails: LiveData<Long>
         get() = _navigateToTuneDetails
@@ -27,18 +25,15 @@ class OverviewViewModel @Inject constructor(
         _navigateToTuneDetails.value = it
     }
 
-    init {
-    }
+    init {}
 
-    fun onAddTune() {
+    fun onAddTuneThruDialog(name: String, url: String) {
         uiScope.launch {
-            if (tuneNameInputText.value != null) {
-                val newTune = Tune(
-                    name = tuneNameInputText.value.toString()
-                )
-                tuneRepository.insert(newTune)
-            }
-            tuneNameInputText.value = null
+            val newTune = Tune(
+                name = name,
+                tabWebUrl = url
+            )
+            tuneRepository.insert(newTune)
         }
     }
 

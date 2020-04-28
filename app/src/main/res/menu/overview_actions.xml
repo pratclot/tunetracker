@@ -2,6 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/add_tune"
+        android:title="@string/add_tune_button_text" />
+    <item
         android:id="@+id/clear_database"
         android:title="@string/clear_database_text" />
 </menu>

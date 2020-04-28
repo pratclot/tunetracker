@@ -20,14 +20,14 @@
             android:id="@+id/tune_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sample_tune_name"
+            android:text="@{detailsViewModel.tuneName}"
             android:textSize="24sp"
             tools:layout_editor_absoluteY="16dp" />
 
         <com.github.barteksc.pdfviewer.PDFView
             android:id="@+id/tune_tab_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
