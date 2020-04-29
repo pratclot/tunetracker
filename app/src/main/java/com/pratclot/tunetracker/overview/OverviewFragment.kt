@@ -61,6 +61,14 @@ class OverviewFragment : Fragment() {
             }
         })
 
+        overviewViewModel.addTuneDialogOpened.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                when (it) {
+                    true -> showAddTuneDialog()
+                }
+            }
+        })
+
         return binding.root
     }
 
@@ -81,7 +89,7 @@ class OverviewFragment : Fragment() {
                 true
             }
             R.id.add_tune -> {
-                showAddTuneDialog()
+                overviewViewModel.markAddTuneDialogAsOpened()
                 true
             }
             else -> false
@@ -109,7 +117,11 @@ class OverviewFragment : Fragment() {
                     }
                 }
                 overviewViewModel.onAddTuneThruDialog(name, url)
+                overviewViewModel.markAddTuneDialogAsClosed()
                 dialog.dismiss()
+            }
+            setOnDismissListener() { _ ->
+                overviewViewModel.markAddTuneDialogAsClosed()
             }
             show()
         }

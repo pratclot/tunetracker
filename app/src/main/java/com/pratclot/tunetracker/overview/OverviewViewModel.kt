@@ -25,7 +25,21 @@ class OverviewViewModel @Inject constructor(
         _navigateToTuneDetails.value = it
     }
 
-    init {}
+    private val _addTuneDialogOpened = MutableLiveData<Boolean>()
+    val addTuneDialogOpened: LiveData<Boolean>
+        get() = _addTuneDialogOpened
+
+    fun markAddTuneDialogAsOpened() {
+        _addTuneDialogOpened.value = true
+    }
+
+    fun markAddTuneDialogAsClosed() {
+        _addTuneDialogOpened.value = false
+    }
+
+    init {
+        markAddTuneDialogAsClosed()
+    }
 
     fun onAddTuneThruDialog(name: String, url: String) {
         uiScope.launch {
