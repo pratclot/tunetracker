@@ -7,4 +7,5 @@
     <string name="sample_tune_link_to_pdf">https://tommyemmanuel.files.wordpress.com/2007/09/tommy-emmanuel-windy-and-warm.pdf</string>
     <string name="clear_database_text">Clear Tunes</string>
     <string name="add_tune_dialog_title">Specify new tune details</string>
+    <string name="pdf_file_extension">.pdf</string>
 </resources>

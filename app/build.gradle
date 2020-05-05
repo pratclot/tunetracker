@@ -5,17 +5,24 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     defaultConfig {
         applicationId "com.pratclot.tunetracker"
         minSdkVersion 19
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues false
+            includeAndroidResources true
+        }
     }
 
     buildTypes {
@@ -76,7 +83,18 @@ dependencies {
     implementation "com.google.dagger:dagger:${versions.dagger}"
     kapt "com.google.dagger:dagger-compiler:${versions.dagger}"
 
-    compileOnly 'com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2'
-    kapt 'com.squareup.inject:assisted-inject-processor-dagger2:0.5.2'
+    compileOnly "com.squareup.inject:assisted-inject-annotations-dagger2:${versions.assistedInject}"
+    kapt "com.squareup.inject:assisted-inject-processor-dagger2:${versions.assistedInject}"
+
+
+    testImplementation "org.hamcrest:hamcrest-all:${versions.hamcrest}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.kotlin_coroutines}"
+
+    testImplementation "androidx.test.ext:junit-ktx:${versions.androidXTestExtKotlinRunner}"
+    testImplementation "androidx.test:core-ktx:${versions.androidXTestCore}"
+    testImplementation "org.robolectric:robolectric:${versions.robolectric}"
+
+    testImplementation "com.squareup.okhttp3:mockwebserver:${versions.mockwebserver}"
+
 
 }

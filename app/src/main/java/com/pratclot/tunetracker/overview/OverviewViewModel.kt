@@ -3,6 +3,7 @@ package com.pratclot.tunetracker.overview
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.repository.ITuneRepository
 import kotlinx.coroutines.*
@@ -12,8 +13,6 @@ class OverviewViewModel @Inject constructor(
     private val tuneRepository: ITuneRepository
 ) :
     ViewModel() {
-    private val viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     val tunes = tuneRepository.tunes
 
@@ -38,11 +37,10 @@ class OverviewViewModel @Inject constructor(
     }
 
     init {
-        markAddTuneDialogAsClosed()
     }
 
     fun onAddTuneThruDialog(name: String, url: String) {
-        uiScope.launch {
+        viewModelScope.launch {
             val newTune = Tune(
                 name = name,
                 tabWebUrl = url
@@ -52,13 +50,13 @@ class OverviewViewModel @Inject constructor(
     }
 
     fun onClear() {
-        uiScope.launch {
+        viewModelScope.launch {
             tuneRepository.clear()
         }
     }
 
     override fun onCleared() {
-        viewModelJob.cancel()
+        viewModelScope.cancel()
         super.onCleared()
     }
 

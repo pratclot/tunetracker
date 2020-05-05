@@ -7,7 +7,7 @@ Status|Feature|Library
 :ok_hand:|Local Storage|Room
 :ok_hand:|REST Interaction| Retrofit 2
 :ok_hand:|Dependency Injection|Dagger 2
-:writing_hand:|Unit Tests|
+:ok_hand:|Unit Tests| JUnit4
 :writing_hand:|UI Tests|
 :writing_hand:|Code Analysis|
 
