@@ -4,6 +4,16 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
+apply plugin: "com.star-zero.gradle.githook"
+
+githook {
+    hooksDir = file(new File(rootDir, ".git/hooks"))
+    hooks {
+        "pre-push" {
+            task = "ktlintCheck"
+        }
+    }
+}
 
 android {
     compileSdkVersion 28
@@ -93,7 +103,10 @@ dependencies {
 
     testImplementation "androidx.test.ext:junit-ktx:${versions.androidXTestExtKotlinRunner}"
     testImplementation "androidx.test:core-ktx:${versions.androidXTestCore}"
-    testImplementation "org.robolectric:robolectric:${versions.robolectric}"
+    testImplementation("org.robolectric:robolectric:${versions.robolectric}") {
+        // https://github.com/robolectric/robolectric/issues/5245
+        exclude group: 'com.google.auto.service', module: 'auto-service'
+    }
 
     testImplementation "com.squareup.okhttp3:mockwebserver:${versions.mockwebserver}"
 
