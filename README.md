@@ -10,6 +10,8 @@ Status|Feature|Library
 :ok_hand:|Unit Tests| JUnit4
 :writing_hand:|UI Tests|
 :writing_hand:|Code Analysis|
+:ok_hand:|Linting|ktlint
+:writing_hand:|CI|Jenkins
 
 <div float="left">
     <img src="assets/Screenshot_1588073261.png" width="300" />

@@ -1,9 +1,9 @@
 package com.pratclot.tunetracker.overview
 
-import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.datasource.fakes.FakeLocalDatasource
-import com.pratclot.tunetracker.repository.fakes.FakeTuneRepository
+import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.repository.ITuneRepository
+import com.pratclot.tunetracker.repository.fakes.FakeTuneRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -11,9 +11,8 @@ import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Test
-
 import org.junit.Before
+import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class OverviewViewModelTest {

@@ -19,5 +19,4 @@ class DetailsViewModelFactory @Inject constructor(
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }

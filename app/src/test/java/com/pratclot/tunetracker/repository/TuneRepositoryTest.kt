@@ -1,17 +1,17 @@
 package com.pratclot.tunetracker.repository
 
 import com.pratclot.tunetracker.datasource.ILocalDataSource
-import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.datasource.fakes.FakeLocalDatasource
+import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.repository.fakes.FakeRepositoryTool
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.hamcrest.CoreMatchers.`is`
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
 
+@ExperimentalCoroutinesApi
 class TuneRepositoryTest {
     private lateinit var datasource: ILocalDataSource
     private lateinit var repositoryTool: IRepositoryTool
@@ -52,7 +52,7 @@ class TuneRepositoryTest {
         runBlockingTest {
             tuneRepository.insert(newTune)
         }
-        assertThat(datasource.get(newTuneName), `is`(newTune))
+        assertEquals(datasource.get(newTuneName), newTune)
     }
 
     @Test

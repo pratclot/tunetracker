@@ -4,9 +4,9 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.pratclot.tunetracker.service.IRestService
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import javax.inject.Singleton
 
 private const val BASE_URL = "https://drive.google.com"
 

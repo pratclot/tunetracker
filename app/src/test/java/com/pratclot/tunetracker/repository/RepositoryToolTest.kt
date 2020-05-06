@@ -6,14 +6,16 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.datasource.fakes.FakeRemoteDatasource
 import com.pratclot.tunetracker.domain.Tune
+import java.io.File
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import java.io.File
 
+@ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4::class)
 class RepositoryToolTest {
     private lateinit var repositoryTool: RepositoryTool

@@ -69,6 +69,6 @@ class RemoteDataSourceTest {
             remoteDataSource.downloadPdfFromRemote(testTune)
         }
 
-        assertArrayEquals(responseBody, response?.bytes())
+        assertArrayEquals(responseBody, response.bytes())
     }
 }

@@ -7,13 +7,12 @@ import com.pratclot.tunetracker.database.asDomainModel
 import com.pratclot.tunetracker.domain.Tune
 import javax.inject.Inject
 
-
 class LocalDataSource @Inject constructor(
     private val tunesDao: TuneDatabaseDao
 ) : ILocalDataSource {
 
     override fun getAll(): LiveData<List<Tune>> {
-        return Transformations.map(tunesDao.getAll()){
+        return Transformations.map(tunesDao.getAll()) {
             it.asDomainModel()
         }
     }

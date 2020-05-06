@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.repository.ITuneRepository
-import kotlinx.coroutines.*
 import javax.inject.Inject
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 class OverviewViewModel @Inject constructor(
     private val tuneRepository: ITuneRepository

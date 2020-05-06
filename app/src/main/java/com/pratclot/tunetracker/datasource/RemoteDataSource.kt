@@ -2,10 +2,10 @@ package com.pratclot.tunetracker.datasource
 
 import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.service.IRestService
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
-import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
     private val ioDispatcher: CoroutineDispatcher,

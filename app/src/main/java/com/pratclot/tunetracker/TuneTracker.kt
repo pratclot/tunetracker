@@ -15,4 +15,3 @@ open class TuneTracker : Application() {
         super.onCreate()
     }
 }
-

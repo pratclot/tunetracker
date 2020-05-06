@@ -8,8 +8,8 @@ import com.pratclot.tunetracker.datasource.RemoteDataSource
 import com.pratclot.tunetracker.service.IRestService
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 class DataSourceModule {

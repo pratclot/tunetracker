@@ -1,7 +1,7 @@
 package com.pratclot.tunetracker.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.TuneTracker
 import com.pratclot.tunetracker.details.di.DetailsComponent

@@ -11,9 +11,9 @@ import androidx.lifecycle.Observer
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.databinding.FragmentDetailsBinding
 import com.pratclot.tunetracker.ui.MainActivity
-import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
+import timber.log.Timber
 
 class DetailsFragment : Fragment() {
 
@@ -55,5 +55,4 @@ class DetailsFragment : Fragment() {
         super.onAttach(context)
         (activity as MainActivity).detailsComponent.inject(this)
     }
-
 }

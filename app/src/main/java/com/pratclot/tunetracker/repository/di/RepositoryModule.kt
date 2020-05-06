@@ -6,8 +6,8 @@ import com.pratclot.tunetracker.repository.IRepositoryTool
 import com.pratclot.tunetracker.repository.RepositoryTool
 import dagger.Module
 import dagger.Provides
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 class RepositoryModule {

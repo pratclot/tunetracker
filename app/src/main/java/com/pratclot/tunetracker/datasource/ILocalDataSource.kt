@@ -3,7 +3,6 @@ package com.pratclot.tunetracker.datasource
 import androidx.lifecycle.LiveData
 import com.pratclot.tunetracker.domain.Tune
 
-
 interface ILocalDataSource {
     fun getAll(): LiveData<List<Tune>>
     fun insert(tune: Tune)
