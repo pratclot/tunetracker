@@ -1,5 +1,7 @@
 # tunetracker
 
+[![Build Status](http://jenkins.pratclot.com/buildStatus/icon?job=tunetracker-pipeline%2FPR-8)](http://jenkins.pratclot.com/job/tunetracker-pipeline/view/change-requests/job/PR-8/)
+
 Android app to help with guitar practice.
 
 Status|Feature|Library
