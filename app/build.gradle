@@ -5,6 +5,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: "com.star-zero.gradle.githook"
+try {
+    apply from: "signingConfigs.gradle"
+} catch (ex) {
+    println "Signing config is not present"
+}
 
 githook {
     hooksDir = file(new File(rootDir, ".git/hooks"))
@@ -23,7 +28,7 @@ android {
         applicationId "com.pratclot.tunetracker"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 1
+        versionCode 2
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -40,6 +45,11 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            try {
+                signingConfig signingConfigs.release
+            } catch (ex) {
+                println "Could not apply signing config to release build"
+            }
         }
     }
 
