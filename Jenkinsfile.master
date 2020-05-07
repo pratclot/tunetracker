@@ -1,0 +1,36 @@
+def KEYSTORE_PATH_ID = "keystore_path"
+def KEYSTORE_PASS_ID = "keystore_pass"
+def KEYSTORE_KEY_NAME_ID = "keystore_key_name"
+def KEYSTORE_KEY_PASS_ID = "keystore_key_pass"
+def SIGNING_CONFIG_PATH_ID = "signing_config_path"
+
+pipeline {
+    agent any
+
+    stages {
+        stage("Build Release Bundle") {
+            environment {
+                KEYSTORE_PATH = credentials("${KEYSTORE_PATH_ID}")
+                KEYSTORE_PASS = credentials("${KEYSTORE_PASS_ID}")
+                KEYSTORE_KEY_NAME = credentials("${KEYSTORE_KEY_NAME_ID}")
+                KEYSTORE_KEY_PASS = credentials("${KEYSTORE_KEY_PASS_ID}")
+                SIGNING_CONFIG_PATH = credentials("${SIGNING_CONFIG_PATH_ID}")
+            }
+            steps {
+                sh """
+                    ./gradlew bundleR
+                """
+            }
+        }
+        stage("Upload Release Bundle") {
+            steps {
+                androidApkUpload googleCredentialsId: "tunetracker"
+            }
+        }
+        post {
+            success {
+                archiveArtifacts artifacts: 'app/build/outputs/**/*-release.aab', fingerprint: true
+            }
+        }
+    }
+}
