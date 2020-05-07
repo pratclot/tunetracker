@@ -9,6 +9,7 @@ import javax.inject.Inject
 class OverviewViewModelFactory @Inject constructor(
     private val tuneRepository: TuneRepository
 ) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(OverviewViewModel::class.java)) {
             return OverviewViewModel(tuneRepository) as T

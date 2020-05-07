@@ -10,6 +10,7 @@ class DetailsViewModelFactory @Inject constructor(
     private val tuneId: Long,
     private val tuneRepository: TuneRepository
 ) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DetailsViewModel::class.java)) {
             return DetailsViewModel(

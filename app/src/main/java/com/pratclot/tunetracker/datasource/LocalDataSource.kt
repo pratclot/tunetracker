@@ -30,6 +30,6 @@ class LocalDataSource @Inject constructor(
     }
 
     override fun getById(id: Long): Tune? {
-        return tunesDao.getById(id)?.asDomainModel()
+        return tunesDao.getById(id).asDomainModel()
     }
 }

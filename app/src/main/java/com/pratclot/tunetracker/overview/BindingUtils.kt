@@ -6,7 +6,7 @@ import com.pratclot.tunetracker.domain.Tune
 
 @BindingAdapter("setTuneName")
 fun TextView.setTuneName(tune: Tune) {
-    tune?.let {
+    tune.let {
         text = tune.name
     }
 }
