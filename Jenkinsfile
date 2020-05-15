@@ -1,31 +1,53 @@
+@Library('jenkins_library@master')
+import com.pratclot.*
+
+slack = new Slack(this).startThread()
+extendedSteps = new ExtendedSteps(this)
+
 pipeline {
     agent any
 
     stages {
         stage('Lint') {
             steps {
-                sh """
-                    ./gradlew ktLintDebugCheck
-                """
+                script {
+                    extendedSteps """
+                        ./gradlew ktLintDebugCheck
+                    """
+                }
             }
         }
         stage('Build') {
             steps {
-                sh """
-                    ./gradlew clean buildDebugPreBundle
-                """
+                script {
+                    extendedSteps """
+                        ./gradlew clean buildDebugPreBundle
+                    """
+                }
             }
         }
         stage('Tests') {
             steps {
-                sh """
-                    ./gradlew testDebugUnitTest
-                """
+                script {
+                    extendedSteps """
+                        ./gradlew testDebugUnitTest
+                    """
+                }
             }
         }
     }
 
     post {
+        success {
+            script {
+                slack.markThreadAsGreen()
+            }
+        }
+        failure {
+            script {
+                slack.markThreadAsRed()
+            }
+        }
         always {
             junit "**/build/test-results/**/*.xml"
         }
