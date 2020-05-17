@@ -1,4 +1,4 @@
-@Library('jenkins_library@master')
+@Library('jenkins_library@v0.1.2')
 import com.pratclot.*
 
 slack = new Slack(this).startThread()
