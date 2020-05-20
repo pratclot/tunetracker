@@ -13,7 +13,6 @@ import com.pratclot.tunetracker.databinding.FragmentDetailsBinding
 import com.pratclot.tunetracker.ui.MainActivity
 import java.io.File
 import javax.inject.Inject
-import timber.log.Timber
 
 class DetailsFragment : Fragment() {
 
@@ -36,8 +35,7 @@ class DetailsFragment : Fragment() {
             false
         )
         arguments = DetailsFragmentArgs.fromBundle(requireArguments())
-        detailsViewModel =
-            (activity as MainActivity).detailsComponent.detailsViewModelFactory.create(arguments.id)
+        detailsViewModel = factory.create(arguments.id)
         binding.detailsViewModel = detailsViewModel
         binding.lifecycleOwner = this
 
@@ -47,12 +45,13 @@ class DetailsFragment : Fragment() {
             }
         })
 
-        Timber.i("${detailsViewModel.tuneName.value}")
         return binding.root
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as MainActivity).detailsComponent.inject(this)
+        if (activity is MainActivity) {
+            (activity as MainActivity).detailsComponent.inject(this)
+        }
     }
 }

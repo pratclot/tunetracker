@@ -2,10 +2,10 @@
     <string name="app_name">Tune Tracker</string>
     <string name="add_tune_button_text">Add Tune</string>
     <string name="tune_input_hint">Type in tune name...</string>
-    <string name="clear_db_button_text">Clear</string>
     <string name="sample_tune_name">Windy and Warm</string>
     <string name="sample_tune_link_to_pdf">https://tommyemmanuel.files.wordpress.com/2007/09/tommy-emmanuel-windy-and-warm.pdf</string>
     <string name="clear_database_text">Clear Tunes</string>
     <string name="add_tune_dialog_title">Specify new tune details</string>
     <string name="pdf_file_extension">.pdf</string>
+    <string name="test_tune_name">testTune</string>
 </resources>

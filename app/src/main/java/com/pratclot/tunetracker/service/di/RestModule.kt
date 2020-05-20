@@ -1,6 +1,5 @@
 package com.pratclot.tunetracker.service.di
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.pratclot.tunetracker.service.IRestService
 import dagger.Module
 import dagger.Provides
@@ -24,7 +23,6 @@ class RestModule {
     fun provideRestService(client: OkHttpClient): IRestService {
         val retrofit = Retrofit.Builder()
             .client(client)
-            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .baseUrl(BASE_URL)
             .build()
         return retrofit.create(IRestService::class.java)

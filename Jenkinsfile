@@ -26,11 +26,20 @@ pipeline {
                 }
             }
         }
-        stage('Tests') {
+        stage('Unit Tests') {
             steps {
                 script {
                     extendedSteps """
                         ./gradlew testDebugUnitTest
+                    """
+                }
+            }
+        }
+        stage('UI Tests') {
+            steps {
+                script {
+                    extendedSteps """
+                        ./gradlew connectedDebugAndroidTest
                     """
                 }
             }

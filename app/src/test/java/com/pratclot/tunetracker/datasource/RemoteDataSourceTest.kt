@@ -3,6 +3,7 @@ package com.pratclot.tunetracker.datasource
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.domain.Tune
@@ -19,6 +20,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import retrofit2.Retrofit
 
+@MediumTest
 @RunWith(AndroidJUnit4::class)
 class RemoteDataSourceTest {
     private lateinit var retrofitService: IRestService

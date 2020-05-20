@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.pratclot.tunetracker.domain.Tune
-import com.pratclot.tunetracker.repository.TuneRepository
+import com.pratclot.tunetracker.repository.ITuneRepository
 import com.squareup.inject.assisted.Assisted
 import com.squareup.inject.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class DetailsViewModel @AssistedInject constructor(
     @Assisted val tuneId: Long,
-    val tuneRepository: TuneRepository
+    val tuneRepository: ITuneRepository
 ) :
     ViewModel() {
 

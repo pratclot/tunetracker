@@ -7,7 +7,11 @@ import timber.log.Timber
 
 open class TuneTracker : Application() {
     val appComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create(applicationContext)
+        initializeComponent()
+    }
+
+    open fun initializeComponent(): AppComponent {
+        return DaggerAppComponent.factory().create(applicationContext)
     }
 
     override fun onCreate() {

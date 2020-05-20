@@ -1,5 +1,6 @@
 package com.pratclot.tunetracker.repository
 
+import androidx.test.filters.SmallTest
 import com.pratclot.tunetracker.datasource.ILocalDataSource
 import com.pratclot.tunetracker.datasource.fakes.FakeLocalDatasource
 import com.pratclot.tunetracker.domain.Tune
@@ -12,6 +13,7 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
+@SmallTest
 class TuneRepositoryTest {
     private lateinit var datasource: ILocalDataSource
     private lateinit var repositoryTool: IRepositoryTool

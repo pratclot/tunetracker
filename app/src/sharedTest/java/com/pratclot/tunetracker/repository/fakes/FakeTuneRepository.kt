@@ -4,8 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import com.pratclot.tunetracker.datasource.ILocalDataSource
 import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.repository.ITuneRepository
+import javax.inject.Inject
 
-class FakeTuneRepository(
+class FakeTuneRepository @Inject constructor(
     private var fakeLocalDatasource: ILocalDataSource
 ) : ITuneRepository {
     override val tunes: MutableLiveData<List<Tune>>

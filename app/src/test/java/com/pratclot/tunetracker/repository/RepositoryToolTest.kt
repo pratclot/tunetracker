@@ -3,6 +3,7 @@ package com.pratclot.tunetracker.repository
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.filters.MediumTest
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.datasource.fakes.FakeRemoteDatasource
 import com.pratclot.tunetracker.domain.Tune
@@ -16,6 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @ExperimentalCoroutinesApi
+@MediumTest
 @RunWith(AndroidJUnit4::class)
 class RepositoryToolTest {
     private lateinit var repositoryTool: RepositoryTool

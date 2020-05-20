@@ -2,12 +2,11 @@ package com.pratclot.tunetracker.overview
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.pratclot.tunetracker.repository.TuneRepository
-import java.lang.IllegalArgumentException
+import com.pratclot.tunetracker.repository.ITuneRepository
 import javax.inject.Inject
 
 class OverviewViewModelFactory @Inject constructor(
-    private val tuneRepository: TuneRepository
+    private val tuneRepository: ITuneRepository
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

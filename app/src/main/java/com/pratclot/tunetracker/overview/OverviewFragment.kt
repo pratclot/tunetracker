@@ -78,7 +78,9 @@ class OverviewFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as MainActivity).overviewComponent.inject(this)
+        if (activity is MainActivity) {
+            (activity as MainActivity).overviewComponent.inject(this)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

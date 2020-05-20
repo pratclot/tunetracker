@@ -5,7 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import com.pratclot.tunetracker.datasource.ILocalDataSource
 import com.pratclot.tunetracker.domain.Tune
 
-class FakeLocalDatasource(var tunes: MutableList<Tune> = mutableListOf()) : ILocalDataSource {
+class FakeLocalDatasource(var tunes: MutableList<Tune> = mutableListOf()) :
+    ILocalDataSource {
     override fun getAll(): LiveData<List<Tune>> {
         return MutableLiveData(tunes)
     }

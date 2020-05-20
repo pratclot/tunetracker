@@ -13,7 +13,7 @@ Status|Feature|Library
 :ok_hand:|REST Interaction| Retrofit 2
 :ok_hand:|Dependency Injection|Dagger 2
 :ok_hand:|Unit Tests| JUnit4
-:writing_hand:|UI Tests|
+:ok_hand:|UI Tests| Espresso
 :writing_hand:|Code Analysis|
 :ok_hand:|Linting|ktlint
 :writing_hand:|CI|Jenkins
