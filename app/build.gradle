@@ -5,8 +5,11 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 apply plugin: "org.jlleitschuh.gradle.ktlint"
 apply plugin: "com.star-zero.gradle.githook"
+apply plugin: 'com.google.gms.google-services'
+apply plugin: "firebase.test.lab"
+
 try {
-    apply from: "${System.env.SIGNING_CONFIG_PATH}"
+    apply from: "signingConfigs.gradle"
 } catch (ex) {
     println "Signing config is not present"
 }
@@ -16,6 +19,17 @@ githook {
     hooks {
         "pre-push" {
             task = "ktlintCheck"
+        }
+    }
+}
+
+firebaseTestLab {
+    keyFile = file("${System.env.PATH_TO_GOOGLE_SERVICE_KEY}")
+    googleProjectId = "${System.env.GOOGLE_PROJECT_ID}"
+    devices {
+        pixel2 {
+            deviceIds = ["walleye"]
+            androidApiLevels = [26]
         }
     }
 }
@@ -32,6 +46,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "com.pratclot.tunetracker.TestRunner"
+
+        multiDexEnabled true
     }
 
     sourceSets {
@@ -143,5 +159,6 @@ dependencies {
 
     androidTestImplementation "androidx.navigation:navigation-testing:2.3.0-alpha06"
 
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
 
 }

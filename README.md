@@ -10,10 +10,10 @@ Android app to help with guitar practice.
 Status|Feature|Library
 -|-|-
 :ok_hand:|Local Storage|Room
-:ok_hand:|REST Interaction| Retrofit 2
+:ok_hand:|REST Interaction|Retrofit 2
 :ok_hand:|Dependency Injection|Dagger 2
-:ok_hand:|Unit Tests| JUnit4
-:ok_hand:|UI Tests| Espresso
+:ok_hand:|Unit Tests|JUnit4
+:ok_hand:|UI Tests|Firebase Test Lab
 :writing_hand:|Code Analysis|
 :ok_hand:|Linting|ktlint
 :writing_hand:|CI|Jenkins
@@ -22,3 +22,14 @@ Status|Feature|Library
     <img src="assets/Screenshot_1588073261.png" width="300" />
     <img src="assets/Screenshot_1588073264.png" width="300" />
 </div>
+
+Some environment variables are required to run Gradle tasks.
+
+Task|Variable|What does
+-|-|-
+firebaseTestLabExecuteDebugInstrumentationPixel2Debug|PATH_TO_GOOGLE_SERVICE_KEY|Path to Firebase service account .json file
+||GOOGLE_PROJECT_ID|Google project ID
+bundleRelease|KEYSTORE_PATH|Path to keystore with signing key
+||KEYSTORE_PASS|Keystore's password
+||KEYSTORE_KEY_NAME|Signing key's alias
+||KEYSTORE_KEY_PASS|Signing key's password
