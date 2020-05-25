@@ -42,7 +42,7 @@ class DetailsFragmentTest {
         navController.setGraph(R.navigation.nav_graph)
 
         val bundle = DetailsFragmentArgs.Builder(testTuneId).build().toBundle()
-        scenario = launchFragmentInContainer(bundle) {
+        scenario = launchFragmentInContainer(bundle, R.style.AppTheme) {
             DetailsFragment().also {
                 it.factory = object : DetailsViewModel.Factory {
                     override fun create(tuneId: Long): DetailsViewModel {

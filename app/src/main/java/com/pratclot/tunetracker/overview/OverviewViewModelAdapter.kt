@@ -8,20 +8,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pratclot.tunetracker.databinding.ListItemTuneViewBinding
 import com.pratclot.tunetracker.domain.Tune
 
-class OverviewViewModelAdapter(val clickListener: TuneListener) : ListAdapter<Tune, OverviewViewModelAdapter.ViewHolder>(DiffCallback()) {
+class OverviewViewModelAdapter(
+    val clickListener: TuneListener,
+    val reloadButtonClickListener: TuneListener
+) : ListAdapter<Tune, OverviewViewModelAdapter.ViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, clickListener)
+        holder.bind(item, clickListener, reloadButtonClickListener)
     }
 
-    class ViewHolder private constructor(val binding: ListItemTuneViewBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: Tune, clickListener: TuneListener) {
+    class ViewHolder private constructor(val binding: ListItemTuneViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Tune, clickListener: TuneListener, reloadButtonClickListener: TuneListener) {
             binding.tune = item
             binding.clickListener = clickListener
+            binding.reloadButtonClickListener = reloadButtonClickListener
             binding.executePendingBindings()
         }
 
@@ -41,7 +46,7 @@ class DiffCallback : DiffUtil.ItemCallback<Tune>() {
     }
 
     override fun areContentsTheSame(oldItem: Tune, newItem: Tune): Boolean {
-        return areItemsTheSame(oldItem, newItem)
+        return oldItem.progress == newItem.progress
     }
 }
 

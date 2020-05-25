@@ -13,7 +13,7 @@ class RemoteDataSource @Inject constructor(
 ) : IRemoteDataSource {
     override suspend fun downloadPdfFromRemote(tune: Tune): ResponseBody {
         return withContext(ioDispatcher) {
-            return@withContext retrofitService.downloadTabInPdf(tune.tabWebUrl)
+            return@withContext retrofitService.downloadTabInPdf(tune.tabWebUrl, tune.id!!)
         }
     }
 }

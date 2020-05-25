@@ -17,8 +17,9 @@ class LocalDataSource @Inject constructor(
         }
     }
 
-    override fun insert(tune: Tune) {
+    override fun insert(tune: Tune): Tune {
         tunesDao.insert(tune.asDatabaseModel())
+        return get(tune.name)!!
     }
 
     override fun clear() {
@@ -31,5 +32,13 @@ class LocalDataSource @Inject constructor(
 
     override fun getById(id: Long): Tune? {
         return tunesDao.getById(id).asDomainModel()
+    }
+
+    override fun update(tune: Tune) {
+        tunesDao.update(tune.asDatabaseModel())
+    }
+
+    override fun updateFilePath(tune: Tune) {
+        tunesDao.updateFilePath(tune.asDatabaseFilePath())
     }
 }

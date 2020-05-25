@@ -8,25 +8,24 @@ import androidx.navigation.testing.TestNavHostController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
-import androidx.test.espresso.matcher.ViewMatchers.hasChildCount
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.MediumTest
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.datasource.fakes.FakeLocalDatasource
 import com.pratclot.tunetracker.domain.Tune
 import com.pratclot.tunetracker.repository.fakes.FakeTuneRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
+@ExperimentalCoroutinesApi
 @MediumTest
 @RunWith(AndroidJUnit4::class)
 class OverviewFragmentTest {
@@ -51,7 +50,7 @@ class OverviewFragmentTest {
         navController = TestNavHostController(getApplicationContext())
         navController.setGraph(R.navigation.nav_graph)
 
-        scenario = launchFragmentInContainer {
+        scenario = launchFragmentInContainer(null, R.style.AppTheme) {
             OverviewFragment().also {
                 it.overviewViewModelFactory = OverviewViewModelFactory(fakeTuneRepository)
             }
@@ -68,21 +67,17 @@ class OverviewFragmentTest {
     }
 
     @Test
-    fun openDialog() {
-        openActionBarOverflowOrOptionsMenu(getApplicationContext())
-    }
-
-    @Test
     fun clickTuneListItem() {
         onView(withId(R.id.tune_view)).perform(click())
         assertEquals(navController.currentDestination?.id, R.id.detailsFragment)
     }
 
     @Test
-    fun clearTunes() {
-        openActionBarOverflowOrOptionsMenu(getApplicationContext())
-        onView(withText(R.string.clear_database_text)).perform(click())
-        onView(withId(R.id.tune_view)).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
-        onView(withId(R.id.tune_view)).check(matches(hasChildCount(0)))
+    fun clickReloadButton() {
+//        No idea how to simply click on something inside a ViewHolder!
+        onView(withId(R.id.tune_view)).perform(
+            RecyclerViewActions.actionOnItem<RecyclerView.ViewHolder>(
+            hasDescendant(withId(R.id.reload_tune_button)), click()
+        ))
     }
 }

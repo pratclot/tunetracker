@@ -16,11 +16,19 @@ class RepositoryTool @Inject constructor(
     private var application: Context,
     private var ioDispatcher: CoroutineDispatcher
 ) : IRepositoryTool {
-    override suspend fun getLocalPathTo(tune: Tune): String {
+    override suspend fun getLocalPathTo(tune: Tune, withDelete: Boolean): String {
         val filename = tune.name + application.resources.getString(R.string.pdf_file_extension)
         val file = File(application.filesDir, filename)
         if (file.exists()) {
-            Timber.i("Did not download the file as it exists! $filename")
+            if (withDelete) {
+                file.delete()
+                savePdfToFile(
+                    remoteDataSource.downloadPdfFromRemote(tune),
+                    filename
+                )
+            } else {
+                Timber.i("Did not download the file as it exists! $filename")
+            }
         } else {
             savePdfToFile(
                 remoteDataSource.downloadPdfFromRemote(tune),
@@ -32,7 +40,7 @@ class RepositoryTool @Inject constructor(
 
     private suspend fun savePdfToFile(pdfContent: ResponseBody, filename: String) {
         withContext(ioDispatcher) {
-            pdfContent.byteStream()?.let {
+            pdfContent.byteStream().let {
                 application.openFileOutput(filename, Context.MODE_PRIVATE).use {
                     it.write(pdfContent.bytes())
                 }

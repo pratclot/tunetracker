@@ -11,8 +11,18 @@ class FakeLocalDatasource(var tunes: MutableList<Tune> = mutableListOf()) :
         return MutableLiveData(tunes)
     }
 
-    override fun insert(tune: Tune) {
-        tunes.add(tune)
+    override fun insert(tune: Tune): Tune {
+        val nextId = tunes.size.toLong()
+        tunes.add(Tune.from(tune, nextId))
+        return get(tune.name)!!
+    }
+
+    override fun updateFilePath(tune: Tune) {
+        tunes.map {
+            if (it.id == tune.id) {
+                it.tabLocalUrl = tune.tabLocalUrl
+            }
+        }
     }
 
     override fun clear() {
@@ -35,5 +45,17 @@ class FakeLocalDatasource(var tunes: MutableList<Tune> = mutableListOf()) :
             }
         }
         return null
+    }
+
+    override fun update(tune: Tune) {
+        tunes.map {
+            if (it.id == tune.id) {
+                it.downloadComplete = tune.downloadComplete
+                it.progress = tune.progress
+                it.name = tune.name
+                it.tabWebUrl = tune.tabWebUrl
+                it.tabLocalUrl = tune.tabLocalUrl
+            }
+        }
     }
 }

@@ -50,11 +50,11 @@ class TuneRepositoryTest {
 
     @Test
     fun insert() {
-        val newTune = Tune(newTuneId, newTuneName)
+        val newTune = Tune(name = newTuneName)
         runBlockingTest {
             tuneRepository.insert(newTune)
         }
-        assertEquals(datasource.get(newTuneName), newTune)
+        assertEquals(datasource.get(newTuneName)!!.contents(), newTune)
     }
 
     @Test
@@ -66,7 +66,7 @@ class TuneRepositoryTest {
     @Test
     fun getTuneByName() = runBlockingTest {
         assertEquals(
-            tuneRepository.getTuneByName(testTuneName),
+            tuneRepository.getTuneByName(testTuneName)!!.tabLocalUrl,
             testTuneTabLocalUrl
         )
     }

@@ -1,5 +1,6 @@
 package com.pratclot.tunetracker.overview
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.filters.SmallTest
 import com.pratclot.tunetracker.datasource.fakes.FakeLocalDatasource
 import com.pratclot.tunetracker.domain.Tune
@@ -13,11 +14,15 @@ import kotlinx.coroutines.test.setMain
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 @SmallTest
 class OverviewViewModelTest {
+    @get:Rule
+    var instantExecutorRule = InstantTaskExecutorRule()
+
     private lateinit var tuneRepository: ITuneRepository
     private lateinit var overviewViewModel: OverviewViewModel
 
@@ -44,7 +49,7 @@ class OverviewViewModelTest {
         val url = "https://tommyemmanuel.files.wordpress.com/2008/12/chet-atkins-walk-dont-run2.pdf"
 
         overviewViewModel.onAddTuneThruDialog(name, url)
-        assertThat(tuneRepository.getTuneByName(name), `is`(url))
+        assertThat(tuneRepository.getTuneByName(name)!!.tabWebUrl, `is`(url))
     }
 
     @Test

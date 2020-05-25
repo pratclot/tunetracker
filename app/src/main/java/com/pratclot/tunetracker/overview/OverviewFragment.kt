@@ -18,6 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.databinding.FragmentOverviewBinding
+import com.pratclot.tunetracker.domain.Tune
+import com.pratclot.tunetracker.overview.OverviewViewModel.Companion.downloadCounter
+import com.pratclot.tunetracker.overview.OverviewViewModel.Companion.tuneProgresses
+import com.pratclot.tunetracker.overview.OverviewViewModel.Companion.updateTuneOnDownloadFinish
 import com.pratclot.tunetracker.ui.MainActivity
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.add_tune_view.*
@@ -28,6 +32,8 @@ class OverviewFragment : Fragment() {
     lateinit var overviewViewModelFactory: OverviewViewModelFactory
 
     private val overviewViewModel by viewModels<OverviewViewModel> { overviewViewModelFactory }
+
+    private lateinit var adapter: OverviewViewModelAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,14 +52,23 @@ class OverviewFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val manager = LinearLayoutManager(application)
         binding.tuneView.layoutManager = manager
-        val adapter = OverviewViewModelAdapter(TuneListener {
-            overviewViewModel.onTuneClicked(it)
-        })
+        adapter = OverviewViewModelAdapter(
+            TuneListener {
+                overviewViewModel.onTuneClicked(it)
+            },
+            TuneListener {
+                overviewViewModel.reloadTune(it!!)
+            }
+        )
         binding.tuneView.adapter = adapter
         binding.lifecycleOwner = this
         overviewViewModel.tunes.observe(viewLifecycleOwner, Observer {
+//            Each time the tunes are updated in the db we need to have most recent list of them
+//            in progresses collection
             it?.let {
-                adapter.submitList(it)
+                overviewViewModel.updateTuneProgresses(it).also {
+                    submitList(it)
+                }
             }
         })
 
@@ -73,6 +88,23 @@ class OverviewFragment : Fragment() {
             }
         })
 
+        downloadCounter.observe(viewLifecycleOwner, Observer {
+            if (downloadCounter.value != 0) {
+                overviewViewModel.tunes.value?.map {
+                    it.progress = tuneProgresses[it.id]!!
+                    it.copy()
+                }?.let {
+                    submitList(it)
+                }
+            }
+        })
+
+        updateTuneOnDownloadFinish.observe(viewLifecycleOwner, Observer {
+            if (it != -1L) {
+                overviewViewModel.downloadFinishedFor(it)
+            }
+        })
+
         return binding.root
     }
 
@@ -81,6 +113,10 @@ class OverviewFragment : Fragment() {
         if (activity is MainActivity) {
             (activity as MainActivity).overviewComponent.inject(this)
         }
+    }
+
+    private fun submitList(list: List<Tune>) {
+        adapter.submitList(list)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

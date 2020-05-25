@@ -17,13 +17,18 @@ data class DatabaseTune(
     val tabWebUrl: String,
 
     @ColumnInfo(name = "tab_local_url")
-    val tabLocalUrl: String
+    val tabLocalUrl: String,
+
+    @ColumnInfo(name = "download_complete")
+    val downloadComplete: Boolean
 ) {
     fun asDomainModel(): Tune {
         return Tune(
+            id = id,
             name = name,
             tabWebUrl = tabWebUrl,
-            tabLocalUrl = tabLocalUrl
+            tabLocalUrl = tabLocalUrl,
+            downloadComplete = downloadComplete
         )
     }
 }
@@ -34,7 +39,8 @@ fun List<DatabaseTune>.asDomainModel(): List<Tune> {
             id = it.id,
             name = it.name,
             tabWebUrl = it.tabWebUrl,
-            tabLocalUrl = it.tabLocalUrl
+            tabLocalUrl = it.tabLocalUrl,
+            downloadComplete = it.downloadComplete
         )
     }
 }

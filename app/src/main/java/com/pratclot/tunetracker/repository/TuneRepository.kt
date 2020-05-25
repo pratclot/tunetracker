@@ -16,11 +16,24 @@ class TuneRepository @Inject constructor(
     override val tunes: LiveData<List<Tune>> = datasource.getAll()
 
     override suspend fun insert(tune: Tune) {
-        val filename = repositoryTool.getLocalPathTo(tune)
-        tune.tabLocalUrl = filename
-
         withContext(ioDispatcher) {
             datasource.insert(tune)
+        }.also {
+            repositoryTool.getLocalPathTo(it).let { filename ->
+                it.tabLocalUrl = filename
+            }
+            updateFilePath(it)
+        }
+    }
+
+    override suspend fun reload(id: Long) {
+        getTuneById(id)?.let {
+            it.downloadComplete = false
+            update(it)
+            repositoryTool.getLocalPathTo(it, true).let { filename ->
+                it.tabLocalUrl = filename
+            }
+            updateFilePath(it)
         }
     }
 
@@ -30,15 +43,27 @@ class TuneRepository @Inject constructor(
         }
     }
 
-    override suspend fun getTuneByName(name: String): String? {
+    override suspend fun getTuneByName(name: String): Tune? {
         return withContext(ioDispatcher) {
-            return@withContext datasource.get(name)?.tabLocalUrl
+            return@withContext datasource.get(name)
         }
     }
 
     override suspend fun getTuneById(id: Long): Tune? {
         return withContext(ioDispatcher) {
             return@withContext datasource.getById(id)!!
+        }
+    }
+
+    override suspend fun update(tune: Tune) {
+        return withContext(ioDispatcher) {
+            return@withContext datasource.update(tune)
+        }
+    }
+
+    override suspend fun updateFilePath(tune: Tune) {
+        return withContext(ioDispatcher) {
+            return@withContext datasource.updateFilePath(tune)
         }
     }
 }

@@ -20,11 +20,23 @@ class FakeTuneRepository @Inject constructor(
         fakeLocalDatasource.clear()
     }
 
-    override suspend fun getTuneByName(name: String): String? {
-        return fakeLocalDatasource.get(name)?.tabWebUrl
+    override suspend fun getTuneByName(name: String): Tune? {
+        return fakeLocalDatasource.get(name)
     }
 
     override suspend fun getTuneById(id: Long): Tune? {
         return fakeLocalDatasource.getById(id)
+    }
+
+    override suspend fun update(tune: Tune) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun reload(id: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateFilePath(tune: Tune) {
+        TODO("Not yet implemented")
     }
 }

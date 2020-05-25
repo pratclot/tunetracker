@@ -25,7 +25,8 @@ buildscript {
             fragmentKtx                : "1.1.0-rc01",
             espresso                   : "3.2.0",
             mockito                    : "3.3.3",
-            navigation                 : "2.3.0-alpha06"
+            navigation                 : "2.3.0-alpha06",
+            archTesting                : "2.1.0"
     ]
     repositories {
         google()

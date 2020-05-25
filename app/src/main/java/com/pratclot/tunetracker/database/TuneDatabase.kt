@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 
-@Database(entities = [DatabaseTune::class], version = 2, exportSchema = false)
+@Database(entities = [DatabaseTune::class], version = 4, exportSchema = false)
 abstract class TuneDatabase : RoomDatabase() {
 
     abstract val tuneDatabaseDao: TuneDatabaseDao

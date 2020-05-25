@@ -1,5 +1,6 @@
 package com.pratclot.tunetracker.service.di
 
+import com.pratclot.tunetracker.overview.ProgressReportingHttpClient
 import com.pratclot.tunetracker.service.IRestService
 import dagger.Module
 import dagger.Provides
@@ -14,8 +15,7 @@ class RestModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .build()
+        return ProgressReportingHttpClient.provideClient()
     }
 
     @Provides
