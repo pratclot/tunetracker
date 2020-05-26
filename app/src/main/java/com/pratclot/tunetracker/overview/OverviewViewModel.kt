@@ -78,7 +78,7 @@ class OverviewViewModel @Inject constructor(
                 }
             }
             return@let tuneProgresses
-        }!!
+        }
         return tuneList.map {
             it.progress = tuneProgresses[it.id]!!
             it
