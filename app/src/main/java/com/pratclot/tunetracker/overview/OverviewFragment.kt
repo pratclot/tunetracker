@@ -19,12 +19,9 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.databinding.FragmentOverviewBinding
 import com.pratclot.tunetracker.domain.Tune
-import com.pratclot.tunetracker.overview.OverviewViewModel.Companion.downloadCounter
-import com.pratclot.tunetracker.overview.OverviewViewModel.Companion.tuneProgresses
-import com.pratclot.tunetracker.overview.OverviewViewModel.Companion.updateTuneOnDownloadFinish
 import com.pratclot.tunetracker.ui.MainActivity
-import javax.inject.Inject
 import kotlinx.android.synthetic.main.add_tune_view.*
+import javax.inject.Inject
 
 class OverviewFragment : Fragment() {
 
@@ -88,10 +85,10 @@ class OverviewFragment : Fragment() {
             }
         })
 
-        downloadCounter.observe(viewLifecycleOwner, Observer {
-            if (downloadCounter.value != 0) {
+         overviewViewModel.downloadCounter.observe(viewLifecycleOwner, Observer {
+            if (it != 0) {
                 overviewViewModel.tunes.value?.map {
-                    it.progress = tuneProgresses[it.id]!!
+                    it.progress = overviewViewModel.tuneProgresses[it.id]!!
                     it.copy()
                 }?.let {
                     submitList(it)
@@ -99,7 +96,7 @@ class OverviewFragment : Fragment() {
             }
         })
 
-        updateTuneOnDownloadFinish.observe(viewLifecycleOwner, Observer {
+        overviewViewModel.updateTuneOnDownloadFinish.observe(viewLifecycleOwner, Observer {
             if (it != -1L) {
                 overviewViewModel.downloadFinishedFor(it)
             }

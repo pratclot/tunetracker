@@ -4,6 +4,7 @@ import android.content.Context
 import com.pratclot.tunetracker.R
 import com.pratclot.tunetracker.datasource.IRemoteDataSource
 import com.pratclot.tunetracker.domain.Tune
+import com.pratclot.tunetracker.overview.ProgressReportingHttpClient
 import java.io.File
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,14 +17,14 @@ class RepositoryTool @Inject constructor(
     private var application: Context,
     private var ioDispatcher: CoroutineDispatcher
 ) : IRepositoryTool {
-    override suspend fun getLocalPathTo(tune: Tune, withDelete: Boolean): String {
+    override suspend fun getLocalPathTo(tune: Tune, withDelete: Boolean, progressCallback: ProgressReportingHttpClient.DownloadProgressCallback): String {
         val filename = tune.name + application.resources.getString(R.string.pdf_file_extension)
         val file = File(application.filesDir, filename)
         if (file.exists()) {
             if (withDelete) {
                 file.delete()
                 savePdfToFile(
-                    remoteDataSource.downloadPdfFromRemote(tune),
+                    remoteDataSource.downloadPdfFromRemote(tune, progressCallback),
                     filename
                 )
             } else {
@@ -31,7 +32,7 @@ class RepositoryTool @Inject constructor(
             }
         } else {
             savePdfToFile(
-                remoteDataSource.downloadPdfFromRemote(tune),
+                remoteDataSource.downloadPdfFromRemote(tune, progressCallback),
                 filename
             )
         }

@@ -38,30 +38,30 @@ class OverviewViewModel @Inject constructor(
         _addTuneDialogOpened.value = false
     }
 
-    companion object {
-//        This should have been a LiveData<Map>. But, as long as the Map there stays the same
+    //    companion object {
+    //        This should have been a LiveData<Map>. But, as long as the Map there stays the same
 //        object there will be no notifications for observers. Download counter helps to have
 //        these notifications. This is ugly.
-        var tuneProgresses = mutableMapOf<Long, Int>()
-        val _downloadCounter = MutableLiveData<Int>()
-        val downloadCounter: LiveData<Int>
-            get() = _downloadCounter
+    var tuneProgresses = mutableMapOf<Long, Int>()
+    val _downloadCounter = MutableLiveData<Int>()
+    val downloadCounter: LiveData<Int>
+        get() = _downloadCounter
 
-        val _updateTuneOnDownloadFinish = MutableLiveData<Long>()
-        val updateTuneOnDownloadFinish: LiveData<Long>
-            get() = _updateTuneOnDownloadFinish
+    val _updateTuneOnDownloadFinish = MutableLiveData<Long>()
+    val updateTuneOnDownloadFinish: LiveData<Long>
+        get() = _updateTuneOnDownloadFinish
 
-        fun updateTuneProgresses(downloadIdentifier: Long, progress: Int) {
-            tuneProgresses[downloadIdentifier] = progress
-            tuneProgresses.forEach {
-                Timber.i("PROGRESSES: ${it.key} ${it.value}")
-            }
-            _downloadCounter.postValue(_downloadCounter.value?.plus(progress))
-            if (progress == 100) {
-                _updateTuneOnDownloadFinish.postValue(downloadIdentifier)
-            }
+    fun updateTuneProgresses(downloadIdentifier: Long, progress: Int) {
+        tuneProgresses[downloadIdentifier] = progress
+        tuneProgresses.forEach {
+            Timber.i("PROGRESSES: ${it.key} ${it.value}")
+        }
+        _downloadCounter.postValue(_downloadCounter.value?.plus(progress))
+        if (progress == 100) {
+            _updateTuneOnDownloadFinish.postValue(downloadIdentifier)
         }
     }
+//    }
 
     fun updateTuneProgresses(tuneList: List<Tune>): List<Tune> {
         val currentTuneProgresses = tuneProgresses
@@ -106,14 +106,36 @@ class OverviewViewModel @Inject constructor(
                 name = name,
                 tabWebUrl = url
             ).let {
-                tuneRepository.insert(it)
+                tuneRepository.insert(
+                    it,
+                    object : ProgressReportingHttpClient.DownloadProgressCallback {
+                        override fun onUpdate(downloadIdentifier: Long, progress: Int) {
+                            updateTuneProgresses(downloadIdentifier, progress)
+                        }
+
+                        override fun onFinish(downloadIdentifier: Long) {
+                            updateTuneProgresses(downloadIdentifier, 100)
+                        }
+
+                    })
             }
         }
     }
 
     fun reloadTune(id: Long) {
         viewModelScope.launch {
-            tuneRepository.reload(id)
+            tuneRepository.reload(
+                id,
+                object : ProgressReportingHttpClient.DownloadProgressCallback {
+                    override fun onUpdate(downloadIdentifier: Long, progress: Int) {
+                        updateTuneProgresses(downloadIdentifier, progress)
+                    }
+
+                    override fun onFinish(downloadIdentifier: Long) {
+                        updateTuneProgresses(downloadIdentifier, 100)
+                    }
+
+                })
         }
     }
 

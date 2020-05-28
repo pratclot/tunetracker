@@ -3,6 +3,7 @@ package com.pratclot.tunetracker.repository
 import androidx.lifecycle.LiveData
 import com.pratclot.tunetracker.datasource.ILocalDataSource
 import com.pratclot.tunetracker.domain.Tune
+import com.pratclot.tunetracker.overview.ProgressReportingHttpClient
 import javax.inject.Inject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -15,22 +16,22 @@ class TuneRepository @Inject constructor(
 
     override val tunes: LiveData<List<Tune>> = datasource.getAll()
 
-    override suspend fun insert(tune: Tune) {
+    override suspend fun insert(tune: Tune, progressCallback: ProgressReportingHttpClient.DownloadProgressCallback) {
         withContext(ioDispatcher) {
             datasource.insert(tune)
         }.also {
-            repositoryTool.getLocalPathTo(it).let { filename ->
+            repositoryTool.getLocalPathTo(it, false, progressCallback).let { filename ->
                 it.tabLocalUrl = filename
             }
             updateFilePath(it)
         }
     }
 
-    override suspend fun reload(id: Long) {
+    override suspend fun reload(id: Long, progressCallback: ProgressReportingHttpClient.DownloadProgressCallback) {
         getTuneById(id)?.let {
             it.downloadComplete = false
             update(it)
-            repositoryTool.getLocalPathTo(it, true).let { filename ->
+            repositoryTool.getLocalPathTo(it, true, progressCallback).let { filename ->
                 it.tabLocalUrl = filename
             }
             updateFilePath(it)
